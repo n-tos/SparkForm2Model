@@ -1,0 +1,50 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Spark form data Sample</title>
+        <meta charset="UTF-8"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script>
+            $(function () {
+                $('#send2JSON').click(function () {
+                    sendData = {
+                        id: $('input[name=jsonId]')[0].value
+                        , text: $('input[name=jsonText]')[0].value
+                    };
+                    $.ajax({
+                        url: '/ajaxJSON'
+                        , type: "post"
+                        , data: {'json': JSON.stringify(sendData)}
+                        , dataType: "json"
+                    }).then(
+                            function (data, status, xhr) {
+                                $('#hideJson').show();
+                                $('#hideJson')[0].innerHTML = JSON.stringify(data);
+                            }
+                    );
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div>
+            <input type="text" name="jsonId" />
+            <input type="text" name="jsonText" />
+            <input type="button" id="send2JSON" value="JSONで送信"/>
+            <div id="hideJson" style="display: none"></div>
+        </div>
+        <div>
+            <form th:object="${formModel}" method="post" action="/fromParam"> 
+                <input type="text" name="id"/> 
+                <input type="text" name="text"/>
+                <input type="submit" id="sendButton" value="formで送信"/>
+            </form>
+        </div>
+        <div>
+            <form th:object="${formModel}" method="post" action="/bean2Model"> 
+                <input type="text" name="id"/> 
+                <input type="text" name="text"/>
+                <input type="submit" value="formで送信(Bean)"/>
+            </form>
+        </div>
+    </body>
+</html>
