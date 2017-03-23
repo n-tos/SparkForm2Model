@@ -33,14 +33,14 @@
             <div id="hideJson" style="display: none"></div>
         </div>
         <div>
-            <form th:object="${formModel}" method="post" action="/fromParam"> 
+            <form method="post" action="/fromParam"> 
                 <input type="text" name="id"/> 
                 <input type="text" name="text"/>
                 <input type="submit" id="sendButton" value="formで送信"/>
             </form>
         </div>
         <div>
-            <form th:object="${formModel}" method="post" action="/bean2Model"> 
+            <form method="post" action="/bean2Model"> 
                 <input type="text" name="id"/> 
                 <input type="text" name="text"/>
                 <input type="submit" value="formで送信(Bean)"/>

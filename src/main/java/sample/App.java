@@ -23,8 +23,6 @@ public class App {
          */
         get("/", (Request req, Response res) -> {
             Map<String, Object> model = new HashMap<>();
-            FormModel fm = new FormModel();
-            model.put("formModel", fm);
             return new ModelAndView(model, "index");
         }, new ThymeleafTemplateEngine());
 
