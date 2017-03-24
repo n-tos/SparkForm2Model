@@ -27,7 +27,8 @@ public class App {
         }, new ThymeleafTemplateEngine());
 
         /**
-         * AjaxでJSONのやりとりを行います。 この場合formでのsubmitと画面遷移ができません。
+         * AjaxでJSONのやりとりを行います。
+         * この場合formでのsubmitと画面遷移ができません。
          */
         post("/ajaxJSON", (Request req, Response res) -> {
             // モデルへの変換処理
@@ -40,14 +41,15 @@ public class App {
         });
 
         /**
-         * Requestのパラメータから値を取得してモデルに1つずつ詰めていきます。 パラメータが多い場合には煩雑かもしれません。
+         * Requestのパラメータから値を取得してモデルに1つずつ詰めていきます。
+         * パラメータが多い場合には煩雑かもしれません。
          */
         post("/fromParam", (Request req, Response res) -> {
             // モデルへの変換処理
             FormModel fm = new FormModel();
             fm.setId(req.queryParams("id"));
             fm.setText(req.queryParams("text"));
-
+            
             System.out.println("fromParam to Model" + fm);
             return "fromParam to Model " + fm.toString();
         });
@@ -59,16 +61,13 @@ public class App {
         post("/bean2Model", (Request req, Response res) -> {
             FormModel fm = new FormModel();
             Map<String, Object> map = new HashMap<>();
-            try {
-                // モデルへの変換処理
-                MultiMap<String> params = new MultiMap<>();
-                UrlEncoded.decodeTo(req.body(), params, "UTF-8");
-                BeanUtils.populate(fm, params);
-                System.out.println(fm);
-            } catch (Exception e) {
-                halt(501);
-                return null;
-            }
+            
+            // モデルへの変換処理
+            MultiMap<String> params = new MultiMap<>();
+            UrlEncoded.decodeTo(req.body(), params, "UTF-8");
+            BeanUtils.populate(fm, params);
+            
+            System.out.println(fm);
             return "bean2Model " + fm.toString();
         });
     }
